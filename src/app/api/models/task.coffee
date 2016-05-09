@@ -27,5 +27,8 @@ angular.module("doubtfire.api.models.task", [])
 
   Task.generateMarkingSubmissionUrl = ->
 
+  Task.applyPrototype = (task) ->
+    _.extend(task, Task.prototype)
+
   Task
 )

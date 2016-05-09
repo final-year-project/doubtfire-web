@@ -1,4 +1,5 @@
 angular.module("doubtfire.common", [
+  'doubtfire.common.doubtfire-model'
   'doubtfire.common.services'
   'doubtfire.common.filters'
   'doubtfire.common.modals'

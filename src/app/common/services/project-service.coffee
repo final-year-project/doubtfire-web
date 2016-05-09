@@ -48,15 +48,8 @@ angular.module("doubtfire.common.services.projects", [])
   converts the | delimited stats to its component arrays
   @param  student [Student|Project] The student's stats to update
   ###
-  projectService.updateTaskStats = (project, new_stats_str) ->
-    new_stats = project.task_stats
-    for i, value of new_stats_str.split("|")
-      if i < new_stats.length
-        new_stats[i].value = Math.round(100 * value)
-      else
-        break
-
-    project.task_stats = new_stats
+  projectService.updateTaskStats = (project, newStatsStr) ->
+    project.updateTaskStats(newStatsStr)
 
   projectService.mapTask = ( task, unit, project ) ->
     td = unit.taskDef(task.task_definition_id)
@@ -96,30 +89,8 @@ angular.module("doubtfire.common.services.projects", [])
     task
 
   projectService.addTaskDetailsToProject = (project, unit) ->
-    if (! project.tasks?) || project.tasks.length < unit.task_definitions.length
-      base = unit.task_definitions.map (td) -> {
-        id: null
-        status: "not_started"
-        task_definition_id: td.id
-        include_in_portfolio: true
-        pct_similar: 0
-        similar_to_count: 0
-        times_assessed: 0
-        # pdf details are loaded from Task.SubmissionDetails
-        # processing_pdf: null
-        # has_pdf: null
-      }
-
-      base = _.filter base, (task) -> ! _.find(project.tasks, (pt) -> pt.task_definition_id == task.task_definition_id)
-
-      project.tasks = [] unless project.tasks?
-      Array.prototype.push.apply project.tasks, base
-
-    project.tasks = project.tasks.map (task) ->
-      projectService.mapTask task, unit, project
-    project.tasks = _.sortBy(project.tasks, (t) -> t.definition.abbreviation).reverse()
-    project
-
+    project.linkTaskDetails(unit)
+    
   projectService.addProjectMethods = (project, unit) ->
     project.updateBurndownChart = () ->
       Project.get { id: project.project_id }, (response) ->
