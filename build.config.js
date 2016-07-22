@@ -22,7 +22,7 @@ module.exports = {
    */
   preprocess: {
     api: {
-      src: ['build/src/app/api/api-url.js'],
+      src: ['build/src/app/config/env/env.js'],
       options: {
         inline: true
       }
