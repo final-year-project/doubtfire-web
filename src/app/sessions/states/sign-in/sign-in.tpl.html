@@ -21,9 +21,17 @@
   </div>
   <div ng-if="!noIE" class="login">
     <h1 class="logo">
-      <i class="logo"></i> Doubtfire
+      <i class="logo"></i> Doubtfire {{showDemo ? 'Demo' : ''}}
       <p class="lead">Learning Management System<p>
     </h1>
+    <div class="text-muted text-center well" ng-if="showDemo">
+      <h5>Welcome to the Doubtfire Demo!</h5>
+      To login, use the credentials for the desired user below.<hr>
+      <div class="text-left">
+        <strong>Username: </strong> <code>astudent</code> <em>or</em> <code>aconvenor</code> <em>or</em> <code>atutor</code>
+        <strong>Password: </strong> <code>password</code>
+      </div>
+    </div>
     <form name="form" ng-submit="signIn()">
       <div class="username-password-entry" ng-class="{'invalid-credentials': invalidCredentials}">
         <input autofocus class="form-control" name="username" type="username" placeholder="Username" ng-model="session.username" auto-fill-sync required />
