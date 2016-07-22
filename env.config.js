@@ -20,9 +20,9 @@ module.exports = {
       ENV_NAME: 'docker'
     },
 
-    heroku: {
+    demo: {
       API_URL: '/api',
-      ENV_NAME: 'heroku'
+      ENV_NAME: 'demo'
     }
   }
 }

@@ -641,13 +641,16 @@ module.exports = function ( grunt ) {
     grunt.log.warn('`grunt watchsvr` has been deprecated. Just use `grunt` instead');
   });
 
-  grunt.registerTask( 'heroku:check_branch', function () {
+  /**
+   * Checks that the API is on the demo branch before deploying
+   */
+  grunt.registerTask( 'demo:check_branch', function () {
     var git = require('simple-git')(__dirname + '/' + userConfig.api_dir);
     var done = this.async();
     git.status(function (err, res) {
       var branch = res.current;
-      if (branch != 'heroku') {
-        grunt.log.error("Doubtfire API must be on the branch `heroku` to be deployed to Heroku");
+      if (branch != 'demo') {
+        grunt.log.error("Doubtfire API must be on the branch `demo` to be deployed to demo");
         return false;
       }
       done();
@@ -657,9 +660,9 @@ module.exports = function ( grunt ) {
   /**
    * The default task is to build and compile.
    */
-  grunt.registerTask( 'deploy:heroku',  [ 'heroku:check_branch', 'heroku', 'copy:to_api' ]);
+  grunt.registerTask( 'deploy:demo',    [ 'demo:check_branch', 'demo', 'copy:to_api' ]);
   grunt.registerTask( 'deploy',         [ 'production', 'copy:to_api' ] );
-  grunt.registerTask( 'heroku',         [ 'env:heroku', 'build', 'compile' ] );
+  grunt.registerTask( 'demo',           [ 'env:demo', 'build', 'compile' ] );
   grunt.registerTask( 'production',     [ 'env:production', 'build', 'compile' ] );
   grunt.registerTask( 'development',    [ 'watch' ]);
   grunt.registerTask( 'default',        [ 'development' ]);

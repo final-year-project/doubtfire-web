@@ -16,7 +16,7 @@ angular.module("doubtfire.sessions.states.sign-in", [])
   $stateProvider.state "sign_in", signInStateData
 )
 .controller("SignInCtrl", ($scope, $state, $stateParams, usernameCookie, $timeout, $modal, currentUser, auth, dfApiUrl, alertService, localStorageService, redirectService, rememberDoubtfireCredentialsCookie, doubtfireLoginTimeCookie, AboutDoubtfireModal, dfEnv) ->
-  $scope.showDemo = dfEnv is 'heroku'
+  $scope.showDemo = dfEnv is 'demo'
   isIE = ->
     window.navigator.appName is "Microsoft Internet Explorer"
   ieVersion = ->
