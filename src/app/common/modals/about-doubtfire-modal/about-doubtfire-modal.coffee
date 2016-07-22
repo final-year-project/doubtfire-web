@@ -15,8 +15,9 @@ angular.module("doubtfire.common.modals.about-doubtfire-modal", [])
   AboutDoubtfireModal
 )
 
-.controller('AboutDoubtfireModalCtrl', ($scope, DoubtfireContributors, $modalInstance, $http, $q) ->
+.controller('AboutDoubtfireModalCtrl', ($scope, DoubtfireContributors, $modalInstance, $http, $q, dfVersion) ->
   contributors = DoubtfireContributors
+  $scope.version = dfVersion
   # initial data
   $scope.contributors = _.map contributors, (c) ->
     avatar:   '/assets/images/person-unknown.gif'
