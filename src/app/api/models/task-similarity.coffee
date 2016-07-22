@@ -1,8 +1,8 @@
 angular.module("doubtfire.api.models.task-similarity", [])
 
-.factory("TaskSimilarity", ($http, api, currentUser) ->
+.factory("TaskSimilarity", ($http, dfApiUrl, currentUser) ->
   get: (task, match, callback) ->
-    url = "#{api}/tasks/#{task.id}/similarity/#{match}"
+    url = "#{dfApiUrl}/tasks/#{task.id}/similarity/#{match}"
     $http.get(url).success ( data ) ->
       callback(data)
 )

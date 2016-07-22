@@ -2,7 +2,7 @@ angular.module("doubtfire.api.models.portfolio-submission", [
   "ngFileUpload"
 ])
 
-.factory("PortfolioSubmission", (api, $window, FileUploader, currentUser, alertService, resourcePlus) ->
+.factory("PortfolioSubmission", (dfApiUrl, $window, FileUploader, currentUser, alertService, resourcePlus) ->
   #
   # Creates a new instance of a PortfolioSubmission object. Requires
   # a project object parameter.
@@ -15,7 +15,7 @@ angular.module("doubtfire.api.models.portfolio-submission", [
     # PortfolioSubmission object
     #
     resource.portfolioUrl =
-      "#{api}/submission/project/#{project.project_id}/portfolio?auth_token=#{currentUser.authenticationToken}"
+      "#{dfApiUrl}/submission/project/#{project.project_id}/portfolio?auth_token=#{currentUser.authenticationToken}"
 
     #
     # Object that defines file upload requirements of an LSR
@@ -54,7 +54,7 @@ angular.module("doubtfire.api.models.portfolio-submission", [
     resource
 
   PortfolioSubmission.getPortfolioUrl = (project) ->
-    "#{api}/submission/project/#{project.project_id}/portfolio?auth_token=#{currentUser.authenticationToken}"
+    "#{dfApiUrl}/submission/project/#{project.project_id}/portfolio?auth_token=#{currentUser.authenticationToken}"
 
   PortfolioSubmission
 )

@@ -14,11 +14,11 @@ angular.module("doubtfire.errors.states.timeout", [])
       pageTitle: "_Timeout_"
   headerServiceProvider.state "timeout", stateData, 'ErrorHeaderCtrl'
 )
-.controller("TimeoutCtrl", ($scope, $timeout, api, auth, redirectService, currentUser) ->
+.controller("TimeoutCtrl", ($scope, $timeout, dfApiUrl, auth, redirectService, currentUser) ->
   doRedirect = () ->
     redirectService.redirect "home", {}
 
   if auth.isAuthenticated()
-    auth.signOut api + "/auth/" + currentUser.authenticationToken + ".json"
+    auth.signOut dfApiUrl + "/auth/" + currentUser.authenticationToken + ".json"
     $timeout doRedirect, 2000
 )

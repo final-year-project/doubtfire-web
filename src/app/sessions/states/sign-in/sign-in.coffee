@@ -61,7 +61,7 @@ angular.module("doubtfire.sessions.states.sign-in", [])
           username: $scope.session.username
           password: $scope.session.password
           remember: $scope.session.remember_me
-        auth.signIn(api + "/auth", signInCredentials,
+        auth.signIn(dfApiUrl + "/auth", signInCredentials,
           (response) ->
             if $scope.session.remember_me
               localStorageService.set(usernameCookie, currentUser)

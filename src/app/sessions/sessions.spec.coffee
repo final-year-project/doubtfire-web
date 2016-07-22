@@ -14,11 +14,11 @@ describe "Sessions module", ->
 
   beforeEach module "doubtfire.sessions"
 
-  beforeEach inject (_auth_, _currentUser_, _api_, _$httpBackend_, _$http_, _$rootScope_) ->
+  beforeEach inject (_auth_, _currentUser_, _dfApiUrl_, _$httpBackend_, _$http_, _$rootScope_) ->
     auth = _auth_
     currentUser = _currentUser_
     defaultAnonymousUser = _.clone currentUser
-    api = _api_
+    api = _dfApiUrl_
     authenticationUrl = api + "/auth"
     httpBackend = _$httpBackend_
     http = _$http_
