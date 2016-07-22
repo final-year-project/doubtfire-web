@@ -644,10 +644,12 @@ module.exports = function ( grunt ) {
   /**
    * The default task is to build and compile.
    */
-  grunt.registerTask( 'deploy',      [ 'production', 'copy:to_api' ] );
-  grunt.registerTask( 'production',  [ 'env:production', 'build', 'compile' ] );
-  grunt.registerTask( 'development', [ 'watch' ]);
-  grunt.registerTask( 'default',     [ 'development' ]);
+  grunt.registerTask( 'deploy:heroku',  [ 'heroku', 'copy:to_api' ]);
+  grunt.registerTask( 'deploy',         [ 'production', 'copy:to_api' ] );
+  grunt.registerTask( 'heroku',         [ 'env:heroku', 'build', 'compile' ] );
+  grunt.registerTask( 'production',     [ 'env:production', 'build', 'compile' ] );
+  grunt.registerTask( 'development',    [ 'watch' ]);
+  grunt.registerTask( 'default',        [ 'development' ]);
 
   /**
    * Style tasks in one grunt task
