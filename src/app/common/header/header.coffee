@@ -26,7 +26,7 @@ angular.module('doubtfire.common.header', [])
     UserNotificationSettingsModal.show $scope.currentUser
 
   $scope.openHelpDeskSubmitTicket = ->
-    HelpDeskSubmitTicketModal.show $scope.currentUser
+    HelpDeskSubmitTicketModal.show $scope.currentUser, $scope.projects
 
   $scope.openAboutModal = ->
     AboutDoubtfireModal.show()
