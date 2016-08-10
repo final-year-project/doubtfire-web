@@ -4,12 +4,23 @@
       <h3>Create Ticket</h3>
     </div>
     <div class="modal-body">
+
       <div class="form-group">
         <label class="col-sm-3 control-label">Unit</label>
-        <a ng-click="sortOrder='unit.abbreviation'; reverse=!reverse">
-          <i ng-show="sortOrder=='unit.abbreviation'" class="fa fa-caret-{{reverse ? 'down' : 'up'}}"></i> Unit
-        </a>
+        <div class="col-sm-7">
+          <div class="btn-group dropdown" dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+              <label class="label label-info small">{{projects[0].unit_code}}</label> - <span class="unit-name">{{projects[0].unit_name}}</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="project in projects">
+                <a ng-click="status.isopen = false" ng-hide=""><label class="label label-info small">{{project.unit_code}}</label> - <span class="unit-name">{{project.unit_name}}</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
+
       <div class="form-group">
         <label class="col-sm-3 control-label">Task Id</label>
         <div class="col-sm-7">
