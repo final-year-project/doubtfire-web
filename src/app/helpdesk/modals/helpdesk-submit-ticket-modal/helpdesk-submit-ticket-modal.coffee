@@ -14,9 +14,14 @@ angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
   HelpDeskSubmitTicketModal
 )
 
-.controller('HelpDeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, projects, auth) ->
+.controller('HelpDeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, unitService, projects, auth) ->
   $scope.currentUser = currentUser
   $scope.projects = projects
-
-  $scope.modalState = {}
+  $scope.selectedProject = $scope.projects[0]
+  $scope.unitSelected = (project) ->
+    $scope.selectedProject = project
+  $scope.getUnit = (unitId) ->
+    unitService.getUnit unitId, false, false, (response) ->
+      $scope.loadedUnit = response
+  $scope.getUnit($scope.selectedProject.unit_id)
 )

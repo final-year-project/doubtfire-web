@@ -28,7 +28,7 @@
       <li class="dropdown" dropdown>
         <a class="dropdown-toggle" dropdown-toggle><span class="glyphicon glyphicon-education"></span> Help Desk<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a ng-click="openHelpDeskSubmitTicket()">Submit Ticket</a></li>
+          <li><a ng-click="openHelpDeskSubmitTicket()" ng-if="projects.length > 0">Submit Ticket</a></li>
         </ul>
       </li>
 
