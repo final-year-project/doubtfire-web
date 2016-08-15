@@ -14,7 +14,7 @@ angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
   HelpDeskSubmitTicketModal
 )
 
-.controller('HelpDeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, unitService, projects, auth) ->
+.controller('HelpDeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, unitService, projects, HelpDeskTicket, auth) ->
   $scope.currentUser = currentUser
   $scope.projects = projects
   $scope.selectedProject = $scope.projects[0]
@@ -24,4 +24,19 @@ angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
     unitService.getUnit unitId, false, false, (response) ->
       $scope.loadedUnit = response
   $scope.getUnit($scope.selectedProject.unit_id)
+  $scope.selectedTask
+
+  openNewTicket = ->
+    HelpDeskTicket.create( {project_id: $scope.selectedProject.project_id,  description: $scope.description} ).$promise.then (
+      (response) ->
+        $modalInstance.close(response)
+    ),
+    (
+      (response) ->
+        if response.data.error?
+          alertService.add("danger", "Error: " + response.data.error, 6000)
+    )
+
+  $scope.openTicket = ->
+    openNewTicket()
 )
