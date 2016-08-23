@@ -24,12 +24,18 @@ angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
     unitService.getUnit unitId, false, false, (response) ->
       $scope.loadedUnit = response
   $scope.getUnit($scope.selectedProject.unit_id)
-  $scope.selectedTask
+  $scope.onSelectDefinition = (taskDef) ->
+    $scope.selectedTaskDef = taskDef
 
   openNewTicket = ->
-    HelpDeskTicket.create( {project_id: $scope.selectedProject.project_id,  description: $scope.description} ).$promise.then (
+    dataToPost =
+      project_id: $scope.selectedProject.project_id
+      description: $scope.description
+      task_definition_id: $scope.selectedTaskDef?.id
+    HelpDeskTicket.create(dataToPost).$promise.then (
       (response) ->
         $modalInstance.close(response)
+        alertService.add("success", "Ticket created successfully.", 2000)
     ),
     (
       (response) ->
