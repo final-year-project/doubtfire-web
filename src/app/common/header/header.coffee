@@ -1,9 +1,11 @@
 #
 # Controllers and providers related to the header/nav bar
 #
-angular.module('doubtfire.common.header', [])
+angular.module('doubtfire.common.header', [
+  'doubtfire.common.header.helpdesk-header'
+])
 
-.controller("BasicHeaderCtrl", ($scope, $state, $modal, User, AboutDoubtfireModal, UserNotificationSettingsModal, UserSettingsModal, HelpDeskSubmitTicketModal, currentUser, headerService, unitService, projectService, dateService) ->
+.controller("BasicHeaderCtrl", ($scope, $state, $modal, User, AboutDoubtfireModal, UserNotificationSettingsModal, UserSettingsModal, currentUser, headerService, unitService, projectService, dateService) ->
   $scope.menus = headerService.getMenus()
   $scope.currentUser = currentUser.profile
   $scope.showDate = dateService.showDate
@@ -24,9 +26,6 @@ angular.module('doubtfire.common.header', [])
 
   $scope.openNotificationSettings = ->
     UserNotificationSettingsModal.show $scope.currentUser
-
-  $scope.openHelpDeskSubmitTicket = ->
-    HelpDeskSubmitTicketModal.show $scope.currentUser, $scope.projects
 
   $scope.openAboutModal = ->
     AboutDoubtfireModal.show()

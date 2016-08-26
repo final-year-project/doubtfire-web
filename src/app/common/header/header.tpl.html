@@ -15,22 +15,10 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-show="!navCollapsed">
     <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown dropdown-admin" dropdown ng-repeat="menu in menus | orderBy:'name'">
-        <a class="dropdown-toggle" dropdown-toggle role="button"><span class="glyphicon glyphicon-{{menu.icon}}">{{menu.name}}</span><b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li ng-repeat="link in menu.links | orderBy:'name'"
-              ng-class="{active: link.class === 'active'}">
-            <a href="{{link.url}}">{{link.name}}</a>
-          </li>
-        </ul>
-      </li>
-
-      <li class="dropdown" dropdown>
-        <a class="dropdown-toggle" dropdown-toggle><span class="glyphicon glyphicon-education"></span> Help Desk<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a ng-click="openHelpDeskSubmitTicket()" ng-if="projects.length > 0">Submit Ticket</a></li>
-        </ul>
-      </li>
+      <helpdesk-header
+        projects="projects"
+        unit-roles="unitRoles">
+      </helpdesk-header>
 
       <li class="dropdown dropdown-units" dropdown ng-hide="projects.length == 0 && unitRoles.length == 0">
         <a role="button" class="dropdown-toggle" dropdown-toggle><span class="glyphicon glyphicon-book"></span> Units <b class="caret"></b></a>

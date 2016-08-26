@@ -1,20 +1,20 @@
 angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
 
-.factory('HelpDeskSubmitTicketModal', ($modal) ->
-  HelpDeskSubmitTicketModal = {}
+.factory('HelpdeskSubmitTicketModal', ($modal) ->
+  HelpdeskSubmitTicketModal = {}
 
-  HelpDeskSubmitTicketModal.show = (user, projects) ->
+  HelpdeskSubmitTicketModal.show = (user, projects) ->
     $modal.open
       templateUrl: 'helpdesk/modals/helpdesk-submit-ticket-modal/helpdesk-submit-ticket-modal.tpl.html'
-      controller: 'HelpDeskSubmitTicketModal'
+      controller: 'HelpdeskSubmitTicketModal'
       resolve:
         user: -> user
         projects: -> projects
 
-  HelpDeskSubmitTicketModal
+  HelpdeskSubmitTicketModal
 )
 
-.controller('HelpDeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, unitService, projects, HelpDeskTicket, auth) ->
+.controller('HelpdeskSubmitTicketModal', ($scope, $modalInstance, alertService, analyticsService, currentUser, User, user, unitService, projects, HelpdeskTicket, auth) ->
   $scope.currentUser = currentUser
   $scope.projects = projects
   $scope.selectedProject = $scope.projects[0]
@@ -32,7 +32,7 @@ angular.module('doubtfire.helpdesk.modals.helpdesk-submit-ticket-modal', [])
       project_id: $scope.selectedProject.project_id
       description: $scope.description
       task_definition_id: $scope.selectedTaskDef?.id
-    HelpDeskTicket.create(dataToPost).$promise.then (
+    HelpdeskTicket.create(dataToPost).$promise.then (
       (response) ->
         $modalInstance.close(response)
         alertService.add("success", "Ticket created successfully.", 2000)
