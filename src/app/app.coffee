@@ -16,6 +16,7 @@ angular.module('doubtfire', [
   'doubtfire.tasks'
   'doubtfire.projects'
   'doubtfire.users'
+  'doubtfire.helpdesk'
   'doubtfire.groups'
   'doubtfire.visualisations'
 ])

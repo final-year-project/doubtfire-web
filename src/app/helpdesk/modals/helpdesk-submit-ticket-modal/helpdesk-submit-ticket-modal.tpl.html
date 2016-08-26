@@ -1,0 +1,48 @@
+<div class="helpdesk-submit-ticket-modal">
+  <form class="form-horizontal" ng-submit="openTicket()" role="form">
+    <div class="modal-header">
+      <h3>Create Ticket</h3>
+    </div>
+    <div class="modal-body">
+      <div class="form-group unit-selection">
+        <label class="col-sm-3 control-label">Unit</label>
+        <div class="col-sm-7">
+          <p class="form-control-static" ng-if="projects.length == 1">
+            <label class="label label-info small">{{selectedProject.unit_code}}</label> - <span class="unit-name">{{selectedProject.unit_name}}</span>
+          </p>
+          <div class="btn-group dropdown" ng-if="projects.length > 1" dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-default form-control dropdown-toggle" dropdown-toggle>
+              <span ng-show="selectedProject" class="pull-left">
+                <label class="label label-info small">{{selectedProject.unit_code}}</label> - <span class="unit-name">{{selectedProject.unit_name}}</span>
+              </span>
+              <span ng-hide="selectedProject" class="pull-left">
+                Select a Unit
+              </span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="project in projects">
+                <a ng-click="unitSelected(project)"><label class="label label-info small">{{project.unit_code}}</label> - <span class="unit-name">{{project.unit_name}}</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!--/unit-selection-->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Task Id</label>
+        <div class="col-sm-7" ng-if="loadedUnit">
+          <task-definition-selector button-style="default" unit="loadedUnit" on-select-definition="onSelectDefinition"></task-definition-selector>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Description</label>
+        <div class="col-sm-7">
+          <markdown-editor ng-model="description" placeholder="Enter description" height="100"></markdown-editor>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer text-right">
+      <input type="submit" class="btn btn-primary" value="Open Ticket" />
+    </div>
+  </form>
+</div>
