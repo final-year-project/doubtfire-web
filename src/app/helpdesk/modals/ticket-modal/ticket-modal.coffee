@@ -20,7 +20,7 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
   HelpdeskTicketModal
 )
 
-.controller('HelpdeskTicketModal', ($scope, $state, $modalInstance, HelpdeskTicket, ConfirmationModal, alertService, unitService, projectService, currentUser, analyticsService, ticket) ->
+.controller('HelpdeskTicketModal', ($scope, $state, $rootScope, $modalInstance, HelpdeskTicket, ConfirmationModal, alertService, unitService, projectService, currentUser, analyticsService, ticket) ->
   $scope.currentUser = currentUser
   $scope.isNew = !ticket?
   $scope.ticket = ticket
@@ -60,6 +60,7 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     openTicketCallback = (error, success) ->
       if success
         $modalInstance.close(success)
+        $rootScope.$broadcast('CurrentOpenTicket', success)
         alertService.add("success", "Ticket created successfully.", 2000)
       if error
         alertService.add("danger", "Error: #{error.data.error}", 6000)
@@ -78,7 +79,7 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     resolveTicketCallback = (error, success) ->
       if success
         $modalInstance.close(success)
-        # TODO: Broadcast ticket removal
+        $rootScope.$broadcast('CurrentOpenTicket', null)
         alertService.add("success", "Ticket resolved!", 2000)
       if error
         alertService.add("danger", "Error: #{error.data.error}", 6000)
@@ -91,11 +92,11 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     closeTicketCallback = (error, success) ->
       if success
         $modalInstance.close(success)
-        # TODO: Broadcast change
+        $rootScope.$broadcast('CurrentOpenTicket', null)
         alertService.add("success", "Ticket closed.", 2000)
       if error
         alertService.add("danger", "Error: #{error.data.error}", 6000)
-    ConfirmationModal.show 'Close Ticket?', 'Are you sure you want to close the ticket without resolving the issue?', ->
+    ConfirmationModal.show 'Close Ticket', 'Are you sure you want to close the ticket without resolving the issue?', ->
       $scope.ticket.close(closeTicketCallback)
 
   #

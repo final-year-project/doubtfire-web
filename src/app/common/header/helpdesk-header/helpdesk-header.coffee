@@ -9,7 +9,7 @@ angular.module('doubtfire.common.header.helpdesk-header', [])
     projects: '='
     unitRoles: '='
   templateUrl: 'common/header/helpdesk-header/helpdesk-header.tpl.html'
-  controller: ($scope, currentUser, HelpdeskTicketModal, HelpdeskTicket) ->
+  controller: ($scope, $rootScope, currentUser, HelpdeskTicketModal, HelpdeskTicket) ->
     #
     # This function updates the visibility of the element
     #
@@ -32,8 +32,11 @@ angular.module('doubtfire.common.header.helpdesk-header', [])
 
     # Check if the user has a ticket open to switch which modals they can open
     HelpdeskTicket.currentOpenTicket $scope.currentUser.id, (error, data) ->
-      $scope.userHasTicketOpen = data?
       $scope.currentOpenTicket = data
+
+    # Watch the root scope for changes to the current ticket and set if needed
+    $rootScope.$on 'CurrentOpenTicket', (event, ticket) ->
+      $scope.currentOpenTicket = ticket
 
     #
     # Opens the submit ticket modal
