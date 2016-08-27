@@ -3,7 +3,7 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
 # API endpoint for serving helpdesk tickets
 #
 .factory("HelpdeskTicket", (resourcePlus) ->
-  HelpdeskTicket = resourcePlus "/helpdesk/tickets/", { id: "@id" }
+  HelpdeskTicket = resourcePlus "/helpdesk/tickets/:id", { id: "@id" }
 
   #
   # Submits a new helpdesk ticket. Provide a project ID, description and task

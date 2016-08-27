@@ -9,7 +9,7 @@ angular.module('doubtfire.common.header.helpdesk-header', [])
     projects: '='
     unitRoles: '='
   templateUrl: 'common/header/helpdesk-header/helpdesk-header.tpl.html'
-  controller: ($scope, currentUser, HelpdeskSubmitTicketModal, HelpdeskTicket) ->
+  controller: ($scope, currentUser, HelpdeskTicketModal, HelpdeskTicket) ->
     #
     # This function updates the visibility of the element
     #
@@ -38,5 +38,5 @@ angular.module('doubtfire.common.header.helpdesk-header', [])
     #
     # Opens the submit ticket modal
     #
-    $scope.openHelpdeskSubmitTicket = ->
-      HelpdeskSubmitTicketModal.show $scope.currentUser, $scope.projects
+    $scope.openHelpdeskTicketModal = ->
+      HelpdeskTicketModal.show $scope.currentOpenTicket

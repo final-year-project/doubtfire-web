@@ -26,7 +26,7 @@ angular.module("doubtfire.common.services.projects", [])
     projectService.loadedProjects = null
 
   projectService.getProjects = ( callback ) ->
-    if ! projectService.loadedProjects?
+    unless projectService.loadedProjects?
       projectService.loadedProjects = []
       Project.query(
         (projects) ->

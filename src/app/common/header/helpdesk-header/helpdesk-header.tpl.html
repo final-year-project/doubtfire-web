@@ -1,5 +1,5 @@
 <li dropdown class="helpdesk header" ng-if="showHelpdeskDropdown">
-  <a class="open-ticket-direct-link pull-left">
+  <a class="open-ticket-direct-link pull-left" ng-click="openHelpdeskTicketModal()">
     <span class="badge" ng-if="currentOpenTicket" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="fa fa-ticket"></i>
     </span>
@@ -10,8 +10,10 @@
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li ng-if="studiesUnit && !userHasTicketOpen">
-      <a ng-click="openHelpdeskSubmitTicket()">Submit a Ticket</a>
+    <li ng-if="studiesUnit">
+      <a ng-click="openHelpdeskTicketModal()">
+        {{ currentOpenTicket ? "View Open Ticket" : "Submit a Ticket" }}
+      </a>
     </li>
   </ul>
 </li>

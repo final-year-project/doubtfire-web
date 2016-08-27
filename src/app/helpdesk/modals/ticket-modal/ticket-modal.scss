@@ -1,8 +1,11 @@
-.helpdesk-submit-ticket-modal {
+.ticket-modal {
   .unit-selection .dropdown {
     width: 100%;
     button {
       text-align: right;
     }
+  }
+  label {
+    margin-right: 1ex;
   }
 }
