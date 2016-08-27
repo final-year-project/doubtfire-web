@@ -1,0 +1,12 @@
+.helpdesk.header {
+  display: inline;
+  .dropdown-toggle {
+    padding-left: 0;
+  }
+  .open-ticket-direct-link {
+    padding-right: 1em;
+    .badge {
+      background-color: $doubtfire-color;
+    }
+  }
+}

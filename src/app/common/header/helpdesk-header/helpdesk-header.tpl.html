@@ -1,10 +1,16 @@
-<li class="dropdown" dropdown ng-if="showHelpdeskDropdown">
-  <a class="dropdown-toggle" dropdown-toggle>
-    <span class="fa fa-ambulance"></span>
-    Helpdesk <b class="caret"></b>
+<li dropdown class="helpdesk header" ng-if="showHelpdeskDropdown">
+  <a class="open-ticket-direct-link pull-left">
+    <span class="badge" ng-if="currentOpenTicket" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+      <i class="fa fa-ticket"></i>
+    </span>
+  </a>
+  <a class="dropdown-toggle pull-right" dropdown-toggle>
+    <i class="fa fa-ambulance"></i>
+    Helpdesk
+    <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li ng-if="studiesUnit">
+    <li ng-if="studiesUnit && !userHasTicketOpen">
       <a ng-click="openHelpdeskSubmitTicket()">Submit a Ticket</a>
     </li>
   </ul>
