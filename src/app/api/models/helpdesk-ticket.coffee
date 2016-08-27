@@ -91,5 +91,14 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
     createdTime = moment(this.created_at)
     moment.duration(createdTime.diff(now)).humanize()
 
+  #
+  # Checks if the user with the specified ticket has a ticket open already
+  # and if so returns that ticket in the callback
+  #
+  HelpdeskTicket.currentOpenTicket = (userId, callback) ->
+    HelpdeskTicket.getUnresolvedTickets userId, (error, success) ->
+      callback(error) if error
+      callback(null, success[0])
+
   HelpdeskTicket
 )
