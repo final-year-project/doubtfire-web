@@ -6,10 +6,10 @@
         Having trouble with something? Get help from a tutor at the programming
         helpdesk, located at ATC620.
       </p>
-    </div>
+    </div><!--/new-ticket-header-->
     <div class="modal-header" ng-hide="isNew">
       <h3>Currently Open Ticket</h3>
-    </div>
+    </div><!--/existing-ticket-header-->
     <div class="modal-body">
       <div class="form-group unit-selection">
         <label class="col-sm-3 control-label">Unit</label>
@@ -81,6 +81,9 @@
       </div>
     </div>
     <div class="modal-footer text-right">
+      <button ng-click="$dismiss()" class="btn btn-primary">
+        Close
+      </button>
       <button ng-click="openTicket()" class="btn btn-success" ng-if="isNew">
         <i class="fa fa-ticket"></i> <i class="fa fa-plus"></i> Submit Ticket
       </button>
@@ -90,6 +93,6 @@
       <button ng-click="resolveTicket()" class="btn btn-success" ng-if="!isNew" if-role="Tutor Convenor Admin">
         <i class="fa fa-ticket"></i> <i class="fa fa-check"></i> Resolve Ticket
       </button>
-    </div>
+    </div><!--/footer-->
   </form>
 </div>

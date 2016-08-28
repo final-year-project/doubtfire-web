@@ -1,7 +1,12 @@
 <li dropdown class="helpdesk header" ng-if="showHelpdeskDropdown">
-  <a class="open-ticket-direct-link pull-left" ng-click="openHelpdeskTicketModal()">
-    <span class="badge" ng-if="currentOpenTicket" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+  <a class="helpdesk-direct-link pull-left" ng-click="openHelpdeskTicketModal()" ng-if="currentOpenTicket">
+    <span class="badge" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="fa fa-ticket"></i>
+    </span>
+  </a>
+  <a class="helpdesk-direct-link pull-left" ng-click="openHelpdeskSessionModal()" ng-if="currentWorkingSession">
+    <span class="badge" tooltip="You finish working in {{currentWorkingSession.timeUntilFinish()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+      <i class="fa fa-clock-o"></i>
     </span>
   </a>
   <a class="dropdown-toggle pull-right" dropdown-toggle>
@@ -13,6 +18,11 @@
     <li ng-if="studiesUnit">
       <a ng-click="openHelpdeskTicketModal()">
         {{ currentOpenTicket ? "View Open Ticket" : "Submit a Ticket" }}
+      </a>
+    </li>
+    <li ng-if="teachesUnit">
+      <a ng-click="openHelpdeskSessionModal()">
+        {{ currentWorkingSession ? "Clock Off" : "Clock On" }}
       </a>
     </li>
   </ul>

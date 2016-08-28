@@ -21,7 +21,6 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
 )
 
 .controller('HelpdeskTicketModal', ($scope, $state, $rootScope, $modalInstance, HelpdeskTicket, ConfirmationModal, alertService, unitService, projectService, currentUser, analyticsService, ticket) ->
-  $scope.currentUser = currentUser
   $scope.isNew = !ticket?
   $scope.ticket = ticket
 

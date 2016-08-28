@@ -3,8 +3,11 @@
   .dropdown-toggle {
     padding-left: 0;
   }
-  .open-ticket-direct-link {
+  .helpdesk-direct-link {
     padding-right: 1em;
+    &:not(:first-child) {
+      padding-left: 0;
+    }
     .badge {
       background-color: $doubtfire-color;
     }

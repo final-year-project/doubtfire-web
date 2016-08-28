@@ -87,9 +87,8 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
   # Returns the duration since the ticket was open
   #
   HelpdeskTicket.prototype.lengthOfTimeOpen = ->
-    now = moment()
     createdTime = moment(this.created_at)
-    moment.duration(createdTime.diff(now)).humanize()
+    moment.duration(createdTime.diff()).humanize()
 
   #
   # Checks if the user with the specified ticket has a ticket open already

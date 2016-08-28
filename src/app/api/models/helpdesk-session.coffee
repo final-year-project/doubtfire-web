@@ -13,7 +13,7 @@ angular.module("doubtfire.api.models.helpdesk-session", [])
     clockOffTime = moment().add(duration, 'hours').format()
     dataToPost =
       clock_off_time: clockOffTime
-      user_id: user_id
+      user_id: userId
     onSuccess = (response) -> callback(null, response)
     onFailure = (response) -> callback(response)
     HelpdeskSession.create(dataToPost).$promise.then(onSuccess, onFailure)
@@ -51,10 +51,9 @@ angular.module("doubtfire.api.models.helpdesk-session", [])
   #
   # Returns the duration until the session expires
   #
-  HelpdeskSession.prototype.timeUntilLeave = ->
-    now = moment()
-    createdTime = moment(this.clock_off_time)
-    moment.duration(now.diff(clock_off_time)).humanize()
+  HelpdeskSession.prototype.timeUntilFinish = ->
+    clockOffTime = moment(this.clock_off_time)
+    moment.duration(clockOffTime.diff()).humanize()
 
   #
   # Returns the currently working session for the user id provided, or

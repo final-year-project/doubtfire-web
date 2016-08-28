@@ -1,0 +1,62 @@
+<div class="session-modal">
+  <form class="form-horizontal" name="sessionForm" role="form">
+    <div class="modal-header">
+      <h3>Clock {{clockOnState ? 'on to' : 'off from'}} the helpdesk</h3>
+    </div><!--/new-ticket-header-->
+    <div class="modal-body text-center clearfix">
+      <div class="col-sm-12" ng-if="clockOnState">
+        <label>
+          Please enter how long you are working at the helpdesk for.
+        </label>
+        <div class="input-group duration-entry col-sm-4">
+          <input name="duration"
+                 ng-model="duration.hours"
+                 class="form-control input-lg"
+                 type="number"
+                 placeholder="2"
+                 step=".25"
+                 min="0.25"
+                 max="8"
+                 required>
+          <span class="input-group-addon">hours</span>
+        </div>
+        <p class="text-danger" ng-show="sessionForm.duration.$error.number">
+          Please enter duration as a decimal number. For example, 1 hour and
+          15 minutes would be represented as <code>1.25</code> hours.
+        </p>
+        <p class="text-danger" ng-show="sessionForm.duration.$error.min">
+          You must work for at least fifteen minutes.
+        </p>
+        <p class="text-danger" ng-show="sessionForm.duration.$error.max">
+          You can't work more than eight hours.
+        </p>
+        <p class="help-block" ng-show="sessionForm.duration.$valid">
+          You will be automatically clocked off at <strong>{{automaticClockOffTime.format('hh:mm a')}}</strong>,
+          but you can manually clock off at an earlier time.
+        </p>
+      </div><!--/clock-on-state-->
+      <div class="col-sm-12" ng-if="clockOffState">
+        <label>
+          You finish working at the helpdesk in
+        </label>
+        <div class="time-left">
+          {{timeLeft.hours()}}h {{timeLeft.minutes()}}m {{timeLeft.seconds()}}s
+        </div>
+        <p class="help-block">
+          (That's at {{automaticClockOffTime.format('hh:mm a')}})
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer text-right">
+      <button ng-click="$dismiss()" class="btn btn-primary">
+        Close
+      </button>
+      <button ng-disabled="!sessionForm.$valid" ng-click="clockOn()" class="btn btn-success" ng-if="clockOnState">
+        <i class="fa fa-clock-o"></i> <i class="fa fa-sign-in"></i> Clock On
+      </button>
+      <button ng-click="clockOff()" class="btn btn-danger" ng-if="clockOffState">
+        <i class="fa fa-clock-o"></i> <i class="fa fa-sign-out"></i> Clock Off Now
+      </button>
+    </div>
+  </form>
+</div>
