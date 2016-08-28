@@ -1,4 +1,4 @@
-<li dropdown class="helpdesk header" ng-if="showHelpdeskDropdown">
+<li dropdown class="helpdesk header" ng-show="showHelpdeskDropdown">
   <a class="helpdesk-direct-link pull-left" ng-click="openHelpdeskTicketModal()" ng-if="currentOpenTicket">
     <span class="badge" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="fa fa-ticket"></i>

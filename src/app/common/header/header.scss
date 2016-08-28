@@ -5,6 +5,13 @@
   border-right: none;
   margin-bottom:0;
 
+  // Fix for dynamic content
+  .navbar-right {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .dropdown-units {
     li:not(.divider) a {
       padding-top: 0.5em;
