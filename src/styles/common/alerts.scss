@@ -49,3 +49,10 @@
   .alert.alert-warning i.fa:before { content: $fa-var-exclamation-triangle; }
   .alert.alert-success i.fa:before { content: $fa-var-check-circle; }
 }
+
+// Push down the alert past the header if it has content
+@media (min-width: $screen-sm) {
+  div[ui-view="header"]:not(:empty) ~ .alert-top {
+    top: 66px;
+  }
+}
