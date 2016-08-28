@@ -48,8 +48,8 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     unitService.getUnit $scope.selectedProject.unit_id, false, false, (response) ->
       $scope.selectedUnit = response
       # If ticket was provided, we need to look up the task def now from the
-      # unit loaded
-      unless $scope.isNew
+      # unit loaded if it has one
+      if not $scope.isNew and $scope.ticket.task_definition_id?
         taskDef = $scope.selectedUnit.taskDef($scope.ticket.task_definition_id)
         $scope.taskDefSelected taskDef
 
