@@ -10,6 +10,7 @@ angular.module("doubtfire.api.models", [
   "doubtfire.api.models.intended-learning-outcome"
   "doubtfire.api.models.helpdesk-ticket"
   "doubtfire.api.models.helpdesk-session"
+  "doubtfire.api.models.helpdesk-stats"
   "doubtfire.api.models.task"
   "doubtfire.api.models.task-comment"
   "doubtfire.api.models.task-definition"
