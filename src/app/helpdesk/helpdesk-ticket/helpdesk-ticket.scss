@@ -1,0 +1,21 @@
+.helpdesk-ticket {
+  $br: 8px;
+  header, .content {
+    padding: 1em 0.75em;
+  }
+  header {
+    background-color: $doubtfire-color;
+    color: #fff;
+    font-size: 1.25em;
+    border-radius: $br $br 0 0;
+  }
+  .content {
+    color: #525252;
+    background-color: #ecedef;
+    border-radius: 0 0 $br $br;
+  }
+  .content .loading {
+    text-align: center;
+    font-size: 2em;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="helpdesk-ticket">
+  <header>
+    <strong>Doubtfire</strong> Helpdesk Ticket
+  </header><!--/ticket-header-->
+  <div class="content">
+    <div class="loading" ng-if="isLoading">
+      <i class="fa fa-spinner fa-pulse"></i>
+    </div><!--/loading-ticket-->
+    <div ng-if="!isLoading">
+      <label>Ticket Data</label>
+      <pre> {{ ticket | json }} </pre>
+    </div><!--/data-loaded-->
+  </div><!--/ticket-content-->
+</div>
