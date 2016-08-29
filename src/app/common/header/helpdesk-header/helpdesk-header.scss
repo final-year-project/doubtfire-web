@@ -1,13 +1,7 @@
 .helpdesk.header {
   display: inline;
-  .dropdown-toggle {
-    padding-left: 0;
-  }
   .helpdesk-direct-link {
-    padding-right: 1em;
-    &:not(:first-child) {
-      padding-left: 0;
-    }
+    padding-right: 0;
     .badge {
       background-color: $doubtfire-color;
     }
