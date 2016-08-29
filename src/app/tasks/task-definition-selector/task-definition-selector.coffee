@@ -11,6 +11,8 @@ angular.module('doubtfire.tasks.task-definition-selector',[])
   scope:
     # Unit required
     unit: "="
+    # Model
+    selectedDefinition: '=ngModel'
     # What to do when definition is changed
     onSelectDefinition: "="
     # Provide a btn-style to force the colour to change`
