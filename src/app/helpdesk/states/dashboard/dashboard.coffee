@@ -75,15 +75,15 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       pollForStats()
     # Call poll at least once to start now
     pollFunction()
-    _pollInterval = $interval pollFunction, interval
+    pollInterval = $interval pollFunction, interval
 
   #
   # Stops helpdesk statistics from polling
   #
   stopPolling = ->
-    return unless HelpdeskStats.isPolling()
-    $interval.cancel(HelpdeskStats._pollInterval)
-    HelpdeskStats._pollInterval = null
+    return unless isPolling()
+    $interval.cancel(pollInterval)
+    pollInterval = null
 
   # When we load, start polling
   startPolling(1000)
