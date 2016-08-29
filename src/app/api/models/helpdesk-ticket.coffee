@@ -96,7 +96,7 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
   #
   HelpdeskTicket.currentOpenTicket = (userId, callback) ->
     HelpdeskTicket.getUnresolvedTickets userId, (error, success) ->
-      callback(error) if error
+      return callback(error) if error
       callback(null, success[0])
 
   HelpdeskTicket

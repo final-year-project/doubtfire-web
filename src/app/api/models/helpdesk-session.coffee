@@ -61,7 +61,7 @@ angular.module("doubtfire.api.models.helpdesk-session", [])
   #
   HelpdeskSession.currentWorkingSession = (userId, callback) ->
     HelpdeskSession.getActiveSessions userId, (error, success) ->
-      callback(error) if error
+      return callback(error) if error
       callback(null, success[0])
 
   HelpdeskSession
