@@ -43,6 +43,14 @@ angular.module("doubtfire.common.services.projects", [])
 
     projectService.loadedProjects
 
+  #
+  # Finds a project with the given id
+  #
+  projectService.findProject = (id, callback) ->
+    projectService.getProjects (projects) ->
+      projFound = _.find(projects, (p) -> p.project_id is id)
+      callback(projFound)
+
   ###
   projects's can update their task stats
   converts the | delimited stats to its component arrays

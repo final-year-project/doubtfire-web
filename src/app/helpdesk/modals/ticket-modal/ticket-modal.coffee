@@ -38,7 +38,8 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
       $scope.selectedProject = $scope.projects[0]
     else
       # Use the ticket information to find the correct project
-      $scope.selectedProject = _.find($scope.projects, (p) -> p.project_id is $scope.ticket.project_id)
+      projectService.findProject $scope.ticket.project_id, (p) ->
+        $scope.selectedProject = p
 
   #
   # Watch when a project is changed to update the selected unit
