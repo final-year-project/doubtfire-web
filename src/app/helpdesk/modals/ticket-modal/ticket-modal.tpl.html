@@ -15,41 +15,46 @@
         <label class="col-sm-3 control-label">Unit</label>
         <div class="col-sm-7">
           <p class="form-control-static" ng-if="projects.length == 1 || !isNew">
-            <label class="label label-info small">{{selectedProject.unit_code}}</label> <span class="unit-name">{{selectedProject.unit_name}}</span>
+            <label class="label label-info small">{{ticket.project.unit_code}}</label>
+            <span class="unit-name">{{ticket.project.unit_name}}</span>
           </p>
           <div class="btn-group dropdown" ng-if="projects.length > 1 && isNew" dropdown is-open="status.isopen">
             <button type="button" class="btn btn-default form-control dropdown-toggle" dropdown-toggle>
-              <span ng-show="selectedProject" class="pull-left">
-                <label class="label label-info small">{{selectedProject.unit_code}}</label> <span class="unit-name">{{selectedProject.unit_name}}</span>
+              <span ng-show="ticket.project" class="pull-left">
+                <label class="label label-info small">{{ticket.project.unit_code}}</label>
+                <span class="unit-name">{{ticket.project.unit_name}}</span>
               </span>
-              <span ng-hide="selectedProject" class="pull-left">
+              <span ng-hide="ticket.project" class="pull-left">
                 Select a Unit
               </span>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
               <li ng-repeat="project in projects">
-                <a ng-click="selectedProject = project"><label class="label label-info small">{{project.unit_code}}</label> - <span class="unit-name">{{project.unit_name}}</span></a>
+                <a ng-click="ticket.project = project">
+                  <label class="label label-info small">{{project.unit_code}}</label>
+                  <span class="unit-name">{{project.unit_name}}</span>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div><!--/unit-selection-->
-      <div class="form-group" ng-if="selectedUnit">
+      <div class="form-group" ng-if="ticket.unit">
         <label class="col-sm-3 control-label">Task</label>
         <div class="col-sm-7" ng-if="isNew">
-          <task-definition-selector button-style="default" unit="selectedUnit" on-select-definition="taskDefSelected"></task-definition-selector>
+          <task-definition-selector button-style="default" unit="ticket.unit" ng-model="ticket.taskDef" on-select-definition="taskDefSelected"></task-definition-selector>
           <p class="help-block">
             Select a task that you want help with, or leave blank if you have a
             general question.
           </p>
         </div><!--/task-selector-if-new-->
         <div class="col-sm-7" ng-if="!isNew">
-          <div ng-if="selectedTaskDef" class="selected-task-detail">
-            <label class="label label-info">{{selectedTaskDef.abbreviation}}</label>
-            {{selectedTaskDef.name}}
+          <div ng-if="ticket.taskDef" class="selected-task-detail">
+            <label class="label label-info">{{ticket.taskDef.abbreviation}}</label>
+            {{ticket.taskDef.name}}
           </div>
-          <div class="text-muted form-control-static" ng-hide="selectedTaskDef">
+          <div class="text-muted form-control-static" ng-hide="ticket.taskDef">
             No task provided
           </div>
         </div>
@@ -57,10 +62,10 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Description</label>
         <div class="col-sm-7" ng-if="isNew">
-          <markdown-editor ng-model="description" placeholder="Enter description" height="100"></markdown-editor>
+          <markdown-editor ng-model="ticket.description" placeholder="Enter description" height="100"></markdown-editor>
           <p class="help-block">
             Give the tutor some context to your issue by providing a description
-            of your question.
+            of your question. {{description}}
           </p>
         </div>
         <div class="col-sm-7" ng-if="!isNew">
@@ -70,7 +75,7 @@
           </p>
         </div>
       </div><!--/description-->
-      <div class="form-group" ng-if="ticket">
+      <div class="form-group" ng-if="!isNew">
         <label class="col-sm-3 control-label">In Queue For</label>
         <div class="col-sm-7 form-control-static">
           {{ticket.lengthOfTimeOpen()}}
@@ -84,7 +89,7 @@
       <button ng-click="$dismiss()" class="btn btn-primary">
         Close
       </button>
-      <button ng-click="openTicket()" class="btn btn-success" ng-if="isNew">
+      <button ng-disabled="ticket.project == null" ng-click="openTicket()" class="btn btn-success" ng-if="isNew">
         <i class="fa fa-ticket"></i> <i class="fa fa-plus"></i> Submit Ticket
       </button>
       <button ng-click="closeTicket()" class="btn btn-danger" ng-if="!isNew">

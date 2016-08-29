@@ -22,35 +22,35 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
 
 .controller('HelpdeskTicketModal', ($scope, $state, $rootScope, $modalInstance, HelpdeskTicket, ConfirmationModal, alertService, unitService, projectService, currentUser, analyticsService, ticket) ->
   $scope.isNew = !ticket?
-  $scope.ticket = ticket
+  $scope.ticket = ticket || new HelpdeskTicket()
 
   #
   # Callback when a task definition has changed
   #
   $scope.taskDefSelected = (taskDef) ->
-    $scope.selectedTaskDef = taskDef
+    $scope.ticket.taskDef = taskDef
 
   # Use project service to get projects
   projectService.getProjects (projects) ->
     $scope.projects = projects
-    if $scope.isNew
-      # Set the initial project to their first project for convenience
-      $scope.selectedProject = $scope.projects[0]
-    else
+    $scope.ticket.project = projects[0] if projects.length == 1
+    unless $scope.isNew
       # Use the ticket information to find the correct project
       projectService.findProject $scope.ticket.project_id, (p) ->
-        $scope.selectedProject = p
+        $scope.ticket.project = p
 
   #
   # Watch when a project is changed to update the selected unit
   #
-  $scope.$watch 'selectedProject.id', ->
-    unitService.getUnit $scope.selectedProject.unit_id, false, false, (response) ->
-      $scope.selectedUnit = response
+  $scope.$watch 'ticket.project.project_id', (newId) ->
+    return unless newId?
+    $scope.taskDefSelected null # reset which task selected
+    unitService.getUnit $scope.ticket.project.unit_id, false, false, (response) ->
+      $scope.ticket.unit = response
       # If ticket was provided, we need to look up the task def now from the
       # unit loaded if it has one
       if not $scope.isNew and $scope.ticket.task_definition_id?
-        taskDef = $scope.selectedUnit.taskDef($scope.ticket.task_definition_id)
+        taskDef = $scope.ticket.unit.taskDef($scope.ticket.task_definition_id)
         $scope.taskDefSelected taskDef
 
   #
@@ -65,9 +65,9 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
       if error
         alertService.add("danger", "Error: #{error.data.error}", 6000)
     HelpdeskTicket.submitTicket(
-      $scope.selectedProject.project_id,
-      $scope.description,
-      $scope.selectedTaskDef?.id,
+      $scope.ticket.project.project_id,
+      $scope.ticket.description,
+      $scope.ticket.taskDef.id,
       openTicketCallback
     )
 
