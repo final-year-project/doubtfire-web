@@ -1,6 +1,19 @@
 <div id="helpdesk-dashboard" class="clearfix">
   <div class="col-sm-12">
-    <h2><i class="fa fa-ambulance"></i> Programming Helpdesk</h2>
-    <helpdesk-ticket ticket="41"></helpdesk-ticket>
+    <h2>
+      <i class="fa fa-ambulance"></i> Programming Helpdesk
+      <small class="pull-right text-muted">Last Updated {{lastUpdated.format("hh:mm:ss a")}}</small>
+    </h2>
+    <div class="col-sm-12">
+      <helpdesk-ticket ng-repeat="ticket in data.tickets" ticket="ticket.id"></helpdesk-ticket>
+    </div>
+    <div class="col-sm-6">
+      <h3> Last Recorded Stats </h3>
+      <pre class="well">{{data.stats[data.stats.length-1] | json}}</pre>
+    </div>
+    <div class="col-sm-6">
+      <h3> Who's Working? </h3>
+      <pre class="well" ng-repeat="staff in data.staff">{{staff | json}}</pre>
+    </div>
   </div>
 </div>
