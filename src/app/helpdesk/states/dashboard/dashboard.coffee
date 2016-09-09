@@ -33,8 +33,11 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   # This function is called when tickets have been updated
   #
   ticketsUpdated = (error, tickets) ->
-    # TODO: Handle error
-    $scope.data.tickets = tickets
+    # Only update what we need to
+    resolvedTickets   = _.differenceBy($scope.data.tickets, tickets, 'id')
+    newTickets        = _.differenceBy(tickets, $scope.data.tickets, 'id')
+    # Remove resolved tickets + merge new tickets
+    $scope.data.tickets = _.chain($scope.data.tickets).without(resolvedTickets).concat(newTickets).value()
 
   #
   # This function is called when stats have been updated
