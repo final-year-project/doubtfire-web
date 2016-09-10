@@ -3,7 +3,7 @@
     <strong>Doubtfire</strong> Helpdesk Ticket
   </header><!--/ticket-header-->
   <header ng-if="!isLoading">
-    <strong>{{ticket.project.student_name}}</strong> <span class="pull-right">{{ticket.queue_num}}</span>
+    <strong>{{ticket.project.student_name}}</strong> <span class="pull-right">#{{ticket.position}}</span>
   </header><!--/ticket-header-->
   <div class="content">
     <div class="loading" ng-if="isLoading">
