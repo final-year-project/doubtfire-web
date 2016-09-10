@@ -49,7 +49,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   statsUpdated = (error, stats) ->
     # TODO: Handle error
     $scope.data.stats.push stats
-    avgWaitTime = $scope.avgWaitTime   = stats.tickets.average_wait_time
+    avgWaitTime = $scope.avgWaitTime = Math.round stats.tickets.average_wait_time
     numUnresolved = $scope.numUnresolved = stats.tickets.number_unresolved
     # TODO: Work out the right values
     $scope.averageWaitTimeColor =
