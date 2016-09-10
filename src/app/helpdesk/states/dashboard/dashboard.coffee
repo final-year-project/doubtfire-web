@@ -14,7 +14,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       roleWhitelist: ['Student', 'Tutor', 'Convenor', 'Admin']
   headerServiceProvider.state 'helpdesk', helpdeskDashboardState
 )
-.controller("HelpdeskDashboardCtrl", ($scope, $rootScope, $interval, $state, HelpdeskStats, HelpdeskTicket, HelpdeskSession) ->
+.controller("HelpdeskDashboardCtrl", ($scope, $rootScope, $interval, $state, HelpdeskStats, HelpdeskTicket, HelpdeskSession, HelpdeskSessionModal) ->
   # Internal poll interval
   pollInterval = null
 
@@ -27,7 +27,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   $scope.data =
     stats: []
     tickets: []
-    staff: []
+    tutorsWorking: []
 
   #
   # This function is called when tickets have been updated
@@ -37,7 +37,11 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
     resolvedTickets   = _.differenceBy($scope.data.tickets, tickets, 'id')
     newTickets        = _.differenceBy(tickets, $scope.data.tickets, 'id')
     # Remove resolved tickets + merge new tickets
-    $scope.data.tickets = _.chain($scope.data.tickets).without(resolvedTickets).concat(newTickets).value()
+    $scope.data.tickets =
+      _.chain($scope.data.tickets)
+      .filter((t) -> !_.find(resolvedTickets, { id: t.id })?)
+      .concat(newTickets)
+      .value()
 
   #
   # This function is called when stats have been updated
@@ -45,13 +49,49 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   statsUpdated = (error, stats) ->
     # TODO: Handle error
     $scope.data.stats.push stats
+    avgWaitTime = $scope.avgWaitTime   = stats.tickets.average_wait_time
+    numUnresolved = $scope.numUnresolved = stats.tickets.number_unresolved
+    # TODO: Work out the right values
+    $scope.averageWaitTimeColor =
+      if 3 > avgWaitTime > 6
+        'primary'
+      else if 6 > avgWaitTime > 9
+        'warning'
+      else if avgWaitTime > 9
+        'danger'
+    $scope.numberUnresolvedColor =
+      if 3 > numUnresolved > 6
+        'primary'
+      else if 6 > numUnresolved > 9
+        'warning'
+      else if numUnresolved > 9
+        'danger'
+
 
   #
   # This function is called when staff have been updated
   #
-  staffUpdated = (error, staff) ->
-    # TODO: Handle error
-    $scope.data.staff = staff
+  tutorsUpdated = (error, sessions) ->
+    # Same concept as ticketsUpdated
+    sessionsFinished = _.differenceBy($scope.data.tutorsWorking, sessions, 'id')
+    sessionsStarted  = _.differenceBy(sessions, $scope.data.tutorsWorking, 'id')
+    $scope.data.tutorsWorking =
+      _.chain($scope.data.tutorsWorking)
+      .filter((s) -> !_.find(sessionsFinished, { id: s.id })?)
+      .concat(sessionsStarted)
+      .map((s) ->
+        finishIn = s.timeUntilFinish()
+        s.minuteDisplay = Math.round(finishIn.minutes() + (finishIn.seconds() * 0.01))
+        s.hourDisplay = finishIn.hours()
+        if s.minuteDisplay == 60
+          s.minuteDisplay = 0
+          s.hourDisplay += 1
+        s.showHour = s.hourDisplay > 0
+        s
+      )
+      .value()
+    $scope.helpdeskClosed = $scope.data.tutorsWorking.length is 0
+    $scope.helpdeskOpen = not $scope.helpdeskClosed
 
   #
   # Begins polling for stats. Default poll time is 30 seconds (measured in ms).
@@ -68,13 +108,13 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       HelpdeskTicket.getUnresolvedTickets null, (error, response) ->
         $scope.lastUpdated = moment()
         ticketsUpdated(error, response)
-    pollForStaff = ->
+    pollForTutors = ->
       HelpdeskSession.tutorsWorkingNow (error, response) ->
         $scope.lastUpdated = moment()
-        staffUpdated(error, response)
+        tutorsUpdated(error, response)
     pollFunction = ->
       pollForTickets()
-      pollForStaff()
+      pollForTutors()
       pollForStats()
     # Call poll at least once to start now
     pollFunction()
@@ -87,6 +127,12 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
     return unless isPolling()
     $interval.cancel(pollInterval)
     pollInterval = null
+
+
+  #
+  # Opens the session modal
+  #
+  $scope.openHelpdeskSessionModal = HelpdeskSessionModal.show
 
   # When we load, start polling
   startPolling(1000)

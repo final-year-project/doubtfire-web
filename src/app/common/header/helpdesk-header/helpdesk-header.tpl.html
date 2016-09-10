@@ -1,11 +1,11 @@
 <li dropdown class="helpdesk header" ng-show="showHelpdeskDropdown">
   <a class="helpdesk-direct-link pull-left" ng-click="openHelpdeskTicketModal()" ng-if="currentOpenTicket">
-    <span class="badge" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+    <span class="badge" tooltip="Ticket open for {{currentOpenTicket.lengthOfTimeOpen().humanize()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="fa fa-ticket"></i>
     </span>
   </a>
   <a class="helpdesk-direct-link pull-left" ng-click="openHelpdeskSessionModal()" ng-if="currentWorkingSession">
-    <span class="badge" tooltip="You finish working in {{currentWorkingSession.timeUntilFinish()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+    <span class="badge" tooltip="You finish working in {{currentWorkingSession.timeUntilFinish().humanize()}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="fa fa-clock-o"></i>
     </span>
   </a>

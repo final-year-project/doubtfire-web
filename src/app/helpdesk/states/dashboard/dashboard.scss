@@ -1,0 +1,101 @@
+// This mixin is used to hide on mobile devices specific rows
+@mixin hide-on-mobile {
+  @extend .hidden-xs;
+  @extend .hidden-sm;
+}
+
+#helpdesk-dashboard {
+  // Fix layout for medium
+  @media (min-width: $screen-md) {
+    height: calc(100vh - #{$navbar-height});
+    min-height: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .row {
+      display: flex;
+    }
+    .status.row {
+      flex: 1;
+    }
+    .graph.row {
+      flex: 2;
+    }
+    .ticket.row {
+      flex: 1.5;
+    }
+  }
+
+  // Hide all rows on mobile except the tickets row
+  .row:not([class^="ticket"]) {
+    @include hide-on-mobile;
+  }
+  // Give rows some space between eachother
+  .row {
+    margin: 15px auto 0 auto;
+  }
+
+  // Help Header
+  h3.help {
+    @extend .text-muted;
+    margin-top: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  // Status Row
+  .status.row {
+    font-size: 2em;
+    text-align: center;
+    .number {
+      display: block;
+      font-size: 4em;
+      line-height: 1;
+    }
+  }
+  // Tutor panel
+  .tutors-working {
+    align-self: center;
+    .list-group {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+    .list-group-item-heading {
+      font-size: 1.5em;
+      .name {
+        font-weight: bold;
+      }
+    }
+    .list-group-item-text {
+      margin: 0.7em auto 1em auto;
+      font-size: 1.2em;
+      display: flex;
+      flex-wrap: wrap;
+      .label:not(:last-of-type) {
+        margin-right: 1ex;
+        margin-bottom: 1ex;
+      }
+    }
+  }
+  // Helpdesk Closed
+  .helpdesk-closed {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em;
+    .message {
+      margin: 0 auto;
+      button {
+        margin-top: 1em;
+      }
+      .title {
+        font-weight: bold;
+        display: block;
+        margin-top: 1em;
+        font-size: 1.5em;
+      }
+    }
+  }
+}

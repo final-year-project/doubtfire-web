@@ -76,6 +76,6 @@ angular.module('doubtfire.helpdesk.modals.session-modal', [])
         alertService.add("success", "You have been clocked off.", 2000)
       if error
         alertService.add("danger", "Error: #{error.data.error}", 6000)
-    ConfirmationModal.show 'Clock off now', "You still have #{session.timeUntilFinish()} left to work. Are you sure you want to clock off prematurely?", ->
+    ConfirmationModal.show 'Clock off now', "You still have #{session.timeUntilFinish().humanize()} left to work. Are you sure you want to clock off prematurely?", ->
       session.clockOff(clockOffCallback)
 )

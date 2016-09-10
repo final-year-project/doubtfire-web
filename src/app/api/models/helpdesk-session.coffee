@@ -32,7 +32,7 @@ angular.module("doubtfire.api.models.helpdesk-session", [])
   HelpdeskSession.tutorsWorkingNow = (callback) ->
     onSuccess = (response) -> callback(null, response)
     onFailure = (response) -> callback(response)
-    HelpdeskSession.query({ id: 'tutors' }).$promise.then(onSuccess, onFailure)
+    HelpdeskSession.query({ is_active: true }).$promise.then(onSuccess, onFailure)
 
   #
   # Prematurely clocks off a session before it's default expiry time
@@ -53,7 +53,7 @@ angular.module("doubtfire.api.models.helpdesk-session", [])
   #
   HelpdeskSession.prototype.timeUntilFinish = ->
     clockOffTime = moment(this.clock_off_time)
-    moment.duration(clockOffTime.diff()).humanize()
+    moment.duration(clockOffTime.diff())
 
   #
   # Returns the currently working session for the user id provided, or

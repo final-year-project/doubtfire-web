@@ -8,7 +8,7 @@
       </p>
     </div><!--/new-ticket-header-->
     <div class="modal-header" ng-hide="isNew">
-      <h3>Currently Open Ticket</h3>
+      <h3>Show Ticket</h3>
     </div><!--/existing-ticket-header-->
     <div class="modal-body">
       <div class="form-group unit-selection">
@@ -43,18 +43,18 @@
       <div class="form-group" ng-if="ticket.unit">
         <label class="col-sm-3 control-label">Task</label>
         <div class="col-sm-7" ng-if="isNew">
-          <task-definition-selector button-style="default" unit="ticket.unit" ng-model="ticket.taskDef" on-select-definition="taskDefSelected"></task-definition-selector>
+          <task-definition-selector button-style="default" unit="ticket.unit" ng-model="ticket.task_definition" on-select-definition="taskDefSelected"></task-definition-selector>
           <p class="help-block">
             Select a task that you want help with, or leave blank if you have a
             general question.
           </p>
         </div><!--/task-selector-if-new-->
         <div class="col-sm-7" ng-if="!isNew">
-          <div ng-if="ticket.taskDef" class="selected-task-detail">
-            <label class="label label-info">{{ticket.taskDef.abbreviation}}</label>
-            {{ticket.taskDef.name}}
+          <div ng-if="ticket.task_definition" class="selected-task-detail">
+            <label class="label label-info">{{ticket.task_definition.abbreviation}}</label>
+            {{ticket.task_definition.name}}
           </div>
-          <div class="text-muted form-control-static" ng-hide="ticket.taskDef">
+          <div class="text-muted form-control-static" ng-hide="ticket.task_definition">
             No task provided
           </div>
         </div>
@@ -78,7 +78,7 @@
       <div class="form-group" ng-if="!isNew">
         <label class="col-sm-3 control-label">In Queue For</label>
         <div class="col-sm-7 form-control-static">
-          {{ticket.lengthOfTimeOpen()}}
+          {{ticket.lengthOfTimeOpen().humanize()}}
           <small class="text-muted">
             ({{ticket.created_at | date:'shortTime'}})
           </small>

@@ -28,23 +28,24 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
   # Callback when a task definition has changed
   #
   $scope.taskDefSelected = (taskDef) ->
-    $scope.ticket.taskDef = taskDef
+    $scope.ticket.task_definition = taskDef
 
   # Use project service to get projects
-  projectService.getProjects (projects) ->
-    $scope.projects = projects
-    $scope.ticket.project = projects[0] if projects.length == 1
-    unless $scope.isNew
-      # Use the ticket information to find the correct project
-      projectService.findProject $scope.ticket.project_id, (p) ->
-        $scope.ticket.project = p
+  unless $scope.ticket.project?
+    projectService.getProjects (projects) ->
+      $scope.projects = projects
+      $scope.ticket.project = projects[0] if projects.length == 1
+      unless $scope.isNew
+        # Use the ticket information to find the correct project
+        projectService.findProject $scope.ticket.project_id, (p) ->
+          $scope.ticket.project = p
 
   #
   # Watch when a project is changed to update the selected unit
   #
   $scope.$watch 'ticket.project.project_id', (newId) ->
     return unless newId?
-    $scope.taskDefSelected null # reset which task selected
+    $scope.taskDefSelected null if $scope.isNew # reset which task selected
     unitService.getUnit $scope.ticket.project.unit_id, false, false, (response) ->
       $scope.ticket.unit = response
       # If ticket was provided, we need to look up the task def now from the
@@ -67,7 +68,7 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     HelpdeskTicket.submitTicket(
       $scope.ticket.project.project_id,
       $scope.ticket.description,
-      $scope.ticket.taskDef.id,
+      $scope.ticket.task_definition.id,
       openTicketCallback
     )
 

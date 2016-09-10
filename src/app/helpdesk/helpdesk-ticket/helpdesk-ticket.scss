@@ -1,21 +1,41 @@
 .helpdesk-ticket {
   $br: 8px;
+  font-size: 1.3em;
   header, .content {
-    padding: 1em 0.75em;
+    padding: 8px;
   }
   header {
     background-color: $doubtfire-color;
     color: #fff;
     font-size: 1.25em;
     border-radius: $br $br 0 0;
+    line-height: 1.25;
   }
   .content {
     color: #525252;
     background-color: #ecedef;
-    border-radius: 0 0 $br $br;
+    .unit-name {
+      text-overflow: ellipsis;
+      width: 65%;
+      text-align: right;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
   .content .loading {
     text-align: center;
     font-size: 2em;
+  }
+  hr {
+    border: 1px dashed grey;
+  }
+  border: 2px solid #ecedef;
+  border-radius: $br;
+  transition: all 0.25s ease;
+  &:hover {
+    position: relative;
+    top: -10px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
   }
 }

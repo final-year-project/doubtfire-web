@@ -29,7 +29,7 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
   HelpdeskTicket.getTicketsByState = (state, userId, callback) ->
     onSuccess = (response) -> callback(null, response)
     onFailure = (response) -> callback(response)
-    HelpdeskTicket.query({ user_id: userId, filter: state })
+    HelpdeskTicket.query({ user_id: userId, shallow: userId?, filter: state })
                   .$promise
                   .then(onSuccess, onFailure)
 
@@ -88,7 +88,7 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
   #
   HelpdeskTicket.prototype.lengthOfTimeOpen = ->
     createdTime = moment(this.created_at)
-    moment.duration(createdTime.diff()).humanize()
+    moment.duration(createdTime.diff())
 
   #
   # Checks if the user with the specified ticket has a ticket open already

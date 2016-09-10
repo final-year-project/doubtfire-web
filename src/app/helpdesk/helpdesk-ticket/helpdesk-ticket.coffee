@@ -9,7 +9,21 @@ angular.module('doubtfire.helpdesk.helpdesk-ticket', [])
   scope:
     # Ticket can either be a ticket object or ticket id number
     inputTicket: '=ticket'
-  controller: ($scope, HelpdeskTicket, projectService, unitService) ->
+  controller: ($scope, HelpdeskTicket, projectService, unitService, HelpdeskTicketModal) ->
+
+    #
+    # Returns warning style for ticket
+    #
+    $scope.warningStyle = ->
+      minsWaiting = -$scope.ticket.lengthOfTimeOpen().asMinutes()
+      if minsWaiting < 3
+        'success'
+      else if 3 > minsWaiting > 6
+        'primary'
+      else if 6 > minsWaiting > 9
+        'warning'
+      else if minsWaiting > 9
+        'danger'
 
     #
     # Updates the ticket information shown
@@ -32,7 +46,7 @@ angular.module('doubtfire.helpdesk.helpdesk-ticket', [])
         onSuccess = (response) ->
           $scope.ticket = response
           $scope.isLoading = false
-          #loadProjectDataFor($scope.ticket) # Only need if we need even more info...
+          # loadProjectDataFor($scope.ticket) # Only need if we need even more info...
         onFailure = (response) ->
           # TODO: Have to handle this error...
           $scope.isLoading = false
@@ -44,7 +58,7 @@ angular.module('doubtfire.helpdesk.helpdesk-ticket', [])
       else if _.isObject ticket
         $scope.ticket = ticket
         $scope.isLoading = false
-        #loadProjectDataFor(ticket) # Only need if we need even more info...
+        # loadProjectDataFor(ticket) # Only need if we need even more info...
       else
         throw new Error("Not a ticket object or ticket ID")
 
@@ -56,4 +70,10 @@ angular.module('doubtfire.helpdesk.helpdesk-ticket', [])
       return unless newTicketId? or (newTicketId? and newTicketId is oldTicketId)
       refreshTicket(newTicketId)
 
+    #
+    # Opens the submit ticket modal
+    #
+    $scope.openHelpdeskTicketModal = ->
+      return if $scope.isLoading
+      HelpdeskTicketModal.show $scope.ticket
 )

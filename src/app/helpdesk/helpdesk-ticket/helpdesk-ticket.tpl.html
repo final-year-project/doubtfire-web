@@ -1,14 +1,29 @@
-<div class="helpdesk-ticket">
-  <header>
+<div class="helpdesk-ticket" ng-click="openHelpdeskTicketModal()">
+  <header ng-if="isLoading">
     <strong>Doubtfire</strong> Helpdesk Ticket
+  </header><!--/ticket-header-->
+  <header ng-if="!isLoading">
+    <strong>{{ticket.project.student_name}}</strong> <span class="pull-right">{{ticket.queue_num}}</span>
   </header><!--/ticket-header-->
   <div class="content">
     <div class="loading" ng-if="isLoading">
       <i class="fa fa-spinner fa-pulse"></i>
     </div><!--/loading-ticket-->
     <div ng-if="!isLoading">
-      <label>Ticket Data</label>
-      <pre> {{ ticket | json }} </pre>
+      <div class="unit">
+        <label class="label label-info">{{ticket.project.unit_code}}</label>
+        <strong class="unit-name pull-right">{{ticket.project.unit_name}}</strong>
+      </div>
+      <div class="task-name text-right">
+        {{ticket.task_definition.name}}
+      </div>
+      <hr>
+      <div class="text-center">
+        Waiting for
+        <strong class="text-{{warningStyle()}}">
+          {{ticket.lengthOfTimeOpen().humanize()}}
+        </strong>
+      </div>
     </div><!--/data-loaded-->
   </div><!--/ticket-content-->
 </div>
