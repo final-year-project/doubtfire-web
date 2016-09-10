@@ -68,7 +68,7 @@ angular.module('doubtfire.helpdesk.modals.ticket-modal', [])
     HelpdeskTicket.submitTicket(
       $scope.ticket.project.project_id,
       $scope.ticket.description,
-      $scope.ticket.task_definition.id,
+      $scope.ticket.task_definition?.id,
       openTicketCallback
     )
 
