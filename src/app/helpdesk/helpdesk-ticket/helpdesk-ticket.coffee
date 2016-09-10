@@ -17,11 +17,11 @@ angular.module('doubtfire.helpdesk.helpdesk-ticket', [])
       minsWaiting = -$scope.ticket.lengthOfTimeOpen().asMinutes()
       if minsWaiting < 3
         'success'
-      else if 3 > minsWaiting > 6
+      else if 3 <= minsWaiting < 6
         'primary'
-      else if 6 > minsWaiting > 9
+      else if 6 <= minsWaiting < 9
         'warning'
-      else if minsWaiting > 9
+      else if minsWaiting >= 9
         'danger'
 
     #

@@ -53,16 +53,16 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
     numUnresolved = $scope.numUnresolved = stats.tickets.number_unresolved
     # TODO: Work out the right values
     $scope.averageWaitTimeColor =
-      if 3 > avgWaitTime > 6
+      if 3 <= avgWaitTime < 6
         'primary'
-      else if 6 > avgWaitTime > 9
+      else if 6 <= avgWaitTime < 9
         'warning'
-      else if avgWaitTime > 9
+      else if avgWaitTime >= 9
         'danger'
     $scope.numberUnresolvedColor =
-      if 3 > numUnresolved > 6
+      if 3 <= numUnresolved < 6
         'primary'
-      else if 6 > numUnresolved > 9
+      else if 6 <= numUnresolved < 9
         'warning'
       else if numUnresolved > 9
         'danger'
