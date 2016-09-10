@@ -41,6 +41,11 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       _.chain($scope.data.tickets)
       .filter((t) -> !_.find(resolvedTickets, { id: t.id })?)
       .concat(newTickets)
+      .map((ticket, idx) ->
+        # Add ticket's position
+        ticket.position = idx + 1
+        ticket
+      )
       .value()
 
   #

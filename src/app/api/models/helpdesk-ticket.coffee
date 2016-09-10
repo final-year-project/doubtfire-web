@@ -27,11 +27,7 @@ angular.module("doubtfire.api.models.helpdesk-ticket", [])
   # If user is not specified, then all tickets will be returned.
   #
   HelpdeskTicket.getTicketsByState = (state, userId, callback) ->
-    onSuccess = (response) ->
-      callback null, _.map(response, (ticket, idx) ->
-        ticket.position = idx + 1
-        ticket
-      )
+    onSuccess = (response) -> callback(null, response)
     onFailure = (response) -> callback(response)
     HelpdeskTicket.query({ user_id: userId, shallow: userId?, filter: state })
                   .$promise
