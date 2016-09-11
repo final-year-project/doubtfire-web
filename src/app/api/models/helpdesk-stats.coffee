@@ -12,13 +12,14 @@ angular.module("doubtfire.api.models.helpdesk-stats", [])
   # If to is null, statistics will fetch to now.
   # If from is null, all statistics from the start of time are returned.
   #
-  HelpdeskStats.get = (from, to, callback) ->
+  HelpdeskStats.get = (from, to, interval, callback) ->
     onSuccess = (response) -> callback(null, response.data)
     onFailure = (response) -> callback(response)
     config =
       params:
         from: from
         to: to
+    config.params.interval = interval if interval
     $http.get("#{api}/helpdesk/stats", config).then(onSuccess, onFailure)
 
   HelpdeskStats

@@ -17,6 +17,8 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
 .controller("HelpdeskDashboardCtrl", ($scope, $rootScope, $interval, $state, HelpdeskStats, HelpdeskTicket, HelpdeskSession, HelpdeskSessionModal) ->
   # Internal poll interval
   pollInterval = null
+  # How long the duration is between each poll, in seconds
+  intervalDuration = 30
 
   #
   # Returns true if the stats are already being polled
@@ -25,9 +27,9 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
 
   # Keep track of new stats|staff|tickets in these variable
   $scope.data =
-    stats: []
     tickets: []
     tutorsWorking: []
+    graphData: {average_wait_time_in_mins: [], unresolved: []}
 
   #
   # This function is called when tickets have been updated
@@ -52,9 +54,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   # This function is called when stats have been updated
   #
   statsUpdated = (error, stats) ->
-    # TODO: Handle error
-    $scope.data.stats.push stats
-    avgWaitTime = $scope.avgWaitTime = Math.round stats.tickets.average_wait_time
+    avgWaitTime = $scope.avgWaitTime = Math.round stats.tickets.average_wait_time_in_mins
     numUnresolved = $scope.numUnresolved = stats.tickets.number_unresolved
     # TODO: Work out the right values
     $scope.averageWaitTimeColor =
@@ -71,7 +71,8 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
         'warning'
       else if numUnresolved > 9
         'danger'
-
+    _.each stats.graph_data, (values, key) ->
+      $scope.data.graphData[key] = $scope.data.graphData[key].concat values
 
   #
   # This function is called when staff have been updated
@@ -99,14 +100,19 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
     $scope.helpdeskOpen = not $scope.helpdeskClosed
 
   #
-  # Begins polling for stats. Default poll time is 30 seconds (measured in ms).
+  # Begins polling for stats
   #
-  startPolling = (interval = 30000) ->
+  startPolling = (interval = intervalDuration) ->
     return if isPolling()
     pollForStats = ->
-      from = moment().subtract(interval, 'seconds').format()
+      # We know if it's the first poll if we are not polling yet!
+      isFirstInterval = not isPolling()
+      # First poll we want to get the last hour's worth
+      subtractValue = if isFirstInterval then 1 * 60 * 60 else interval
+      useInterval   = if isFirstInterval then null else interval
+      from = moment().subtract(subtractValue, 'seconds').format()
       to   = moment().format()
-      HelpdeskStats.get from, to, (error, response) ->
+      HelpdeskStats.get from, to, useInterval, (error, response) ->
         $scope.lastUpdated = moment()
         statsUpdated(error, response)
     pollForTickets = ->
@@ -123,7 +129,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       pollForStats()
     # Call poll at least once to start now
     pollFunction()
-    pollInterval = $interval pollFunction, interval
+    pollInterval = $interval pollFunction, interval * 1000 # milliseconds
 
   #
   # Stops helpdesk statistics from polling
@@ -139,8 +145,8 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   #
   $scope.openHelpdeskSessionModal = HelpdeskSessionModal.show
 
-  # When we load, start polling
-  startPolling(1000)
+  # When we load, start polling at intervalDuration seconds
+  startPolling(intervalDuration)
   # When we unload, stop polling
   $scope.$on '$destroy', stopPolling
 )

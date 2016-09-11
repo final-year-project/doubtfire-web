@@ -9,60 +9,63 @@
       </button>
     </div>
   </div><!--/helpdesk-closed-->
-  <div class="status row" ng-if="helpdeskOpen">
-    <div class="people-in-queue col-sm-4 text-{{numberUnresolvedColor}}">
-      <span class="number">
-        {{numUnresolved}}
-      </span>
-      people in queue
-    </div><!--/people-in-queue-->
-    <div class="emoji-face col-sm-4">
-      <span class="number">😖</span> BUSY
-    </div><!--/emoji-face-->
-    <div class="average-wait-time col-sm-4 text-{{averageWaitTimeColor}}">
-      <span class="number">
-        {{avgWaitTime}}m
-      </span>
-      average wait time
-    </div><!--/average-wait-time-->
-  </div><!--/status-row-->
-  <div class="graph row">
-    <div class="tutors-working col-sm-4" ng-if="helpdeskOpen">
-      <h3 class="help">
-        {{ tutorCount = data.tutorsWorking.length }}
-        tutor{{tutorCount > 1 ? 's' : ''}} working right now
-      </h3>
-      <div class="list-group">
-        <div ng-repeat="session in data.tutorsWorking" class="list-group-item">
-          <div class="list-group-item-heading">
-            <span class="name">
-              {{finishIn = session.timeUntilFinish(); session.user.name}}
-            </span><!--/tutor-name-->
-            <div class="finish-in pull-right text-muted pointer" tooltip="Finishes at {{session.clock_off_time | date:'shortTime'}}" tooltip-append-to-body="true" tooltip-placement="right">
-              <span ng-if="session.showHour">
-                {{session.hourDisplay}}h
-              </span>
-              {{session.minuteDisplay}}m
-            </div><!--/finish-in-->
+  <div ng-if="helpdeskOpen">
+    <div class="status row">
+      <div class="people-in-queue col-sm-4 text-{{numberUnresolvedColor}}">
+        <span class="number">
+          {{numUnresolved}}
+        </span>
+        people in queue
+      </div><!--/people-in-queue-->
+      <div class="emoji-face col-sm-4">
+        <span class="number">😖</span> BUSY
+      </div><!--/emoji-face-->
+      <div class="average-wait-time col-sm-4 text-{{averageWaitTimeColor}}">
+        <span class="number">
+          {{avgWaitTime}}m
+        </span>
+        average wait time
+      </div><!--/average-wait-time-->
+    </div><!--/status-row-->
+    <div class="graph row">
+      <div class="tutors-working col-sm-4">
+        <h3 class="help">
+          {{ tutorCount = data.tutorsWorking.length }}
+          tutor{{tutorCount > 1 ? 's' : ''}} working right now
+        </h3>
+        <div class="list-group">
+          <div ng-repeat="session in data.tutorsWorking" class="list-group-item">
+            <div class="list-group-item-heading">
+              <span class="name">
+                {{finishIn = session.timeUntilFinish(); session.user.name}}
+              </span><!--/tutor-name-->
+              <div class="finish-in pull-right text-muted pointer" tooltip="Finishes at {{session.clock_off_time | date:'shortTime'}}" tooltip-append-to-body="true" tooltip-placement="right">
+                <span ng-if="session.showHour">
+                  {{session.hourDisplay}}h
+                </span>
+                {{session.minuteDisplay}}m
+              </div><!--/finish-in-->
+            </div>
+            <p class="list-group-item-text">
+              <label ng-repeat="unit in session.user.units_taught" class="label label-info pointer" tooltip="{{unit.name}}" tooltip-append-to-body="true">
+                {{unit.code}}
+              </label>
+            </p><!--/unit-labels-->
           </div>
-          <p class="list-group-item-text">
-            <label ng-repeat="unit in session.user.units_taught" class="label label-info pointer" tooltip="{{unit.name}}" tooltip-append-to-body="true">
-              {{unit.code}}
-            </label>
-          </p><!--/unit-labels-->
-        </div>
-      </div><!--/tutors-working-list-->
-    </div><!--/tutors-working-->
-    <div class="graph col-sm-8">
-      <h3 class="help">
-        Tickets unresolved and wait times today
-      </h3>
-      <img src="https://i.imgur.com/SFfG8A9.png" width="80%">
-    </div>
-  </div>
-  <div class="ticket row">
-    <div class="ticket-wrapper col-sm-3" ng-repeat="ticket in data.tickets">
-      <helpdesk-ticket ticket="ticket"></helpdesk-ticket>
-    </div>
-  </div>
+        </div><!--/tutors-working-list-->
+      </div><!--/tutors-working-->
+      <div class="graph col-sm-8">
+        <h3 class="help">
+          Tickets unresolved and wait times today
+        </h3>
+        <helpdesk-dashboard-timeline data="data.graphData" height="400">
+        </helpdesk-dashboard-timeline>
+      </div>
+    </div><!--/graph-row-->
+    <div class="ticket row">
+      <div class="ticket-wrapper col-sm-3" ng-repeat="ticket in data.tickets">
+        <helpdesk-ticket ticket="ticket"></helpdesk-ticket>
+      </div>
+    </div><!--/ticket-row-->
+  </div><!--/helpdesk-open-->
 </div>

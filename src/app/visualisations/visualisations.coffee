@@ -9,6 +9,7 @@ angular.module('doubtfire.visualisations', [
   'doubtfire.visualisations.task-completion-box-plot'
   'doubtfire.visualisations.achievement-box-plot'
   'doubtfire.visualisations.achievement-custom-bar-chart'
+  'doubtfire.visualisations.helpdesk-dashboard-timeline'
 ])
 
 .factory('Visualisation', ($interval, analyticsService) ->
