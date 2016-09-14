@@ -8,7 +8,7 @@
   // Fix layout for medium
   @media (min-width: $screen-md) {
     height: calc(100vh - #{$navbar-height});
-    min-height: 800px;
+    min-height: 600px;
     overflow: hidden;
     display: flex;
     flex-direction: column;

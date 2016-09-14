@@ -15,12 +15,7 @@ angular.module("doubtfire.api.models.helpdesk-stats", [])
   HelpdeskStats.get = (from, to, interval, callback) ->
     onSuccess = (response) -> callback(null, response.data)
     onFailure = (response) -> callback(response)
-    config =
-      params:
-        from: from
-        to: to
-    config.params.interval = interval if interval
-    $http.get("#{api}/helpdesk/stats", config).then(onSuccess, onFailure)
+    $http.get("#{api}/helpdesk/stats/dashgraph").then(onSuccess, onFailure)
 
   HelpdeskStats
 )

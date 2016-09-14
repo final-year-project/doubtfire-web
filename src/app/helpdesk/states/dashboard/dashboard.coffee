@@ -29,7 +29,6 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   $scope.data =
     tickets: []
     tutorsWorking: []
-    graphData: {average_wait_time_in_mins: [], unresolved: []}
 
   #
   # This function is called when tickets have been updated
@@ -54,8 +53,10 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
   # This function is called when stats have been updated
   #
   statsUpdated = (error, stats) ->
-    avgWaitTime = $scope.avgWaitTime = Math.round stats.tickets.average_wait_time_in_mins
-    numUnresolved = $scope.numUnresolved = stats.tickets.number_unresolved
+    statsTimes = _.keys(stats)
+    lastRecord = stats[_.last(statsTimes)]
+    avgWaitTime   = $scope.avgWaitTime   = lastRecord.average_wait_time_in_mins
+    numUnresolved = $scope.numUnresolved = lastRecord.number_of_unresolved_tickets
     # TODO: Work out the right values
     $scope.averageWaitTimeColor =
       if 3 <= avgWaitTime < 6
@@ -71,8 +72,8 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
         'warning'
       else if numUnresolved > 9
         'danger'
-    _.each stats.graph_data, (values, key) ->
-      $scope.data.graphData[key] = $scope.data.graphData[key].concat values
+    # Angular nvd3 accepts milliseconds not seconds for unix time
+    $scope.graphData = stats
 
   #
   # This function is called when staff have been updated
