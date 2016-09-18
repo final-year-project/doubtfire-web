@@ -14,7 +14,7 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       roleWhitelist: ['Student', 'Tutor', 'Convenor', 'Admin']
   headerServiceProvider.state 'helpdesk', helpdeskDashboardState
 )
-.controller("HelpdeskDashboardCtrl", ($scope, $rootScope, $interval, $state, HelpdeskStats, HelpdeskTicket, HelpdeskSession, HelpdeskSessionModal) ->
+.controller("HelpdeskDashboardCtrl", ($scope, $timeout, $rootScope, $interval, $state, HelpdeskStats, HelpdeskTicket, HelpdeskSession, HelpdeskSessionModal) ->
   # Internal poll interval
   pollInterval = null
   # How long the duration is between each poll, in seconds
@@ -101,6 +101,12 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
     $scope.helpdeskOpen = not $scope.helpdeskClosed
 
   #
+  # If clock on event, refresh immediately
+  #
+  $rootScope.$on 'CurrentWorkingSession', (event, session) ->
+    $scope.pollNow()
+
+  #
   # Begins polling for stats
   #
   startPolling = (interval = intervalDuration) ->
@@ -128,8 +134,10 @@ angular.module('doubtfire.helpdesk.states.dashboard', [])
       pollForTickets()
       pollForTutors()
       pollForStats()
+    $scope.pollNow = ->
+      pollFunction()
     # Call poll at least once to start now
-    pollFunction()
+    $scope.pollNow()
     pollInterval = $interval pollFunction, interval * 1000 # milliseconds
 
   #
