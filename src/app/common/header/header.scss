@@ -28,6 +28,8 @@
       padding-left: 1.75ex;
       flex: 1;
       text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -43,5 +45,23 @@ a.navbar-brand {
   h1.logo {
     font-size: 1.3em;
     margin: 0;
+  }
+}
+
+@media (max-width: $screen-md) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+  }
+  .navbar .navbar-nav .open ul.dropdown-menu {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #aaa;
+    border-radius: 0;
+  }
+  body {
+    padding-top: $navbar-height;
   }
 }
