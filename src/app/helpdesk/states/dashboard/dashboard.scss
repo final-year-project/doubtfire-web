@@ -9,7 +9,6 @@
   @media (min-width: $screen-md) {
     height: calc(100vh - #{$navbar-height});
     min-height: 600px;
-    // overflow: hidden;
     display: flex;
     flex-direction: column;
     .row {
@@ -81,6 +80,7 @@
   // Ticket Row
   .ticket.row {
     justify-content: center;
+    overflow-x: hidden;
   }
   // Helpdesk Closed
   .helpdesk-closed {
