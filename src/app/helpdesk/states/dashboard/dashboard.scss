@@ -9,7 +9,7 @@
   @media (min-width: $screen-md) {
     height: calc(100vh - #{$navbar-height});
     min-height: 600px;
-    overflow: hidden;
+    // overflow: hidden;
     display: flex;
     flex-direction: column;
     .row {
