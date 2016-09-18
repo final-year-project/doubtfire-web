@@ -5,11 +5,14 @@
   border-right: none;
   margin-bottom:0;
 
-  // Fix for dynamic content
-  .navbar-right {
-    width: 80%;
-    display: flex;
-    justify-content: flex-end;
+  // Mobile responsive fixes
+  @media (min-width: $screen-md) {
+    // Fix for dynamic content
+    .navbar-right {
+      width: 80%;
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   .dropdown-units {
