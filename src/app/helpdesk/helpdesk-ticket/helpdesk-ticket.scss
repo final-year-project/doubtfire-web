@@ -1,6 +1,14 @@
 .helpdesk-ticket {
   $br: 8px;
   font-size: 1.3em;
+  // Mobile responsive fixes
+  @media (max-width: $screen-md) {
+    margin-bottom: 1em;
+    .unit, .unit-name, .task-name {
+      text-align: center !important;
+      width: 100% !important;
+    }
+  }
   header, .content {
     padding: 8px;
   }
