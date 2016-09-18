@@ -1,0 +1,8 @@
+// Mobile responsive fixes
+@media (max-width: $screen-md) {
+  .modal-footer button {
+    width: 100%;
+    margin-bottom: 1em !important;
+    margin-left: 0 !important;
+  }
+}
