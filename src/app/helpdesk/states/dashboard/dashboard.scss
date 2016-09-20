@@ -9,7 +9,6 @@
   @media (min-width: $screen-md) {
     height: calc(100vh - #{$navbar-height});
     min-height: 600px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     .row {
@@ -85,6 +84,7 @@
   // Helpdesk Closed
   .helpdesk-closed {
     height: 100%;
+    margin-top: 2em;
     display: flex;
     align-items: center;
     text-align: center;

@@ -1,9 +1,20 @@
-.helpdesk.header {
-  display: inline;
-  .helpdesk-direct-link {
-    padding-right: 0;
-    .badge {
-      background-color: $doubtfire-color;
+// Mobile responsive fixes
+@media (min-width: $screen-md) {
+  .helpdesk.header {
+    display: inline;
+    .helpdesk-direct-link {
+      padding-right: 0;
+      .badge {
+        background-color: $doubtfire-color;
+      }
     }
+    .dropdown-toggle {
+      float: right;
+    }
+  }
+}
+@media (max-width: $screen-md) {
+  .helpdesk.header .helpdesk-direct-link {
+    display: none;
   }
 }

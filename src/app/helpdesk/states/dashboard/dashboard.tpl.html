@@ -1,12 +1,15 @@
 <div id="helpdesk-dashboard" class="clearfix">
-  <div ng-if="helpdeskClosed" class="helpdesk-closed">
-    <div class="message">
+  <div class="helpdesk-closed">
+    <div class="message" ng-if="helpdeskClosed">
       <i class='fa fa-hourglass-end fa-4x'></i>
       <span class="title"> Helpdesk Closed </span>
       No tutors are working right now<br>
       <button ng-click="openHelpdeskSessionModal()" if-role="Tutor Convenor Admin" class="btn btn-lg btn-success">
         <i class="fa fa-clock-o"></i> <i class="fa fa-sign-in"></i> Clock On
       </button>
+    </div>
+    <div class="message" ng-if="helpdeskClosed == null && helpdeskOpen == null">
+      <i class="fa fa-spinner fa-pulse fa-4x"></i>
     </div>
   </div><!--/helpdesk-closed-->
   <div ng-if="helpdeskOpen">

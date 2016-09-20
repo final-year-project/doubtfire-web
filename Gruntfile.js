@@ -358,7 +358,7 @@ module.exports = function ( grunt ) {
         sub: true,
         boss: true,
         eqnull: true
-      },
+      }
       // No test or globals provided - comment out to silence warnings
       // test: [
       //   '<%= app_files.jsunit %>'
